@@ -32,20 +32,28 @@ void show(i, context) {
     String time = data['datetime'].substring(11, 19);
     String week = '';
     int intweek = data['day_of_week'];
-    if (intweek == 0) {
-      week = '(日)';
-    } else if (intweek == 1) {
-      week = '(一)';
-    } else if (intweek == 2) {
-      week = '(二)';
-    } else if (intweek == 3) {
-      week = '(三)';
-    } else if (intweek == 4) {
-      week = '(四)';
-    } else if (intweek == 5) {
-      week = '(五)';
-    } else if (intweek == 6) {
-      week = '(六)';
+    switch (intweek) {
+      case 0:
+        week = "(日)";
+        break;
+      case 1:
+        week = "(一)";
+        break;
+      case 2:
+        week = "(二)";
+        break;
+      case 3:
+        week = "(三)";
+        break;
+      case 4:
+        week = "(四)";
+        break;
+      case 5:
+        week = "(五)";
+        break;
+      case 6:
+        week = "(六)";
+        break;
     }
     showDialog(
         context: context,
