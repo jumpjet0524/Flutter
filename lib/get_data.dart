@@ -26,7 +26,7 @@ Future getTime(i) async {
   return data;
 }
 
-void show(i, context) {
+void show(i, context,x,y) {
   getTime(i).then((data) {
     String date = data['datetime'].substring(0, 10);
     String time = data['datetime'].substring(11, 19);
@@ -55,22 +55,59 @@ void show(i, context) {
         week = "(六)";
         break;
     }
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: Colors.yellow,
-            title: Text(country[i]),
-            content: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('日期 : ' + date + week),
-                  Text('時間 : ' + time),
-                ],
-              ),
+    Widget _buildNewTransition(
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) {
+      return ScaleTransition(
+        alignment: FractionalOffset(x/392, y/780),
+        scale: animation,
+        child: child,
+      );
+    }
+
+    showGeneralDialog(
+      context: context,
+      barrierLabel: '',
+      barrierDismissible: true,
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionBuilder: _buildNewTransition,
+      pageBuilder: (BuildContext context, Animation animation,
+          Animation secondaryAnimation) {
+        return AlertDialog(
+          backgroundColor: Colors.yellow,
+          title: Text(country[i]),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('日期 : ' + date + week),
+                Text('時間 : ' + time),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
+
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         backgroundColor: Colors.yellow,
+    //         title: Text(country[i]),
+    //         content: SingleChildScrollView(
+    //           child: Column(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             children: <Widget>[
+    //               Text('日期 : ' + date + week),
+    //               Text('時間 : ' + time),
+    //             ],
+    //           ),
+    //         ),
+    //       );
+    //     });
   });
 }

@@ -30,8 +30,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //抓資料+
+  double x = 0.0;
+  double y = 0.0;
 
+  void _update(PointerEvent details){
+    setState(() {
+      x = details.position.dx;
+      y = details.position.dy;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,44 +48,23 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
         ],
       ),
-      body: ListView(
-        children: List.generate(
-          country.length,
-          (i) => ListTile(
-            leading: const CircleAvatar(
-              child: Icon(Icons.flag),
+      body: Listener(
+        onPointerDown: _update,
+        child:ListView(
+          children: List.generate(
+            country.length,
+            (i) => ListTile(
+              leading: const CircleAvatar(
+                child: Icon(Icons.flag),
+              ),
+              title: Text(country[i]),
+              onTap: () {
+                show(i, context,x,y);
+              },
             ),
-            title: Text(country[i]),
-            onTap: () {show(i,context);},
           ),
         ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: const CircleAvatar(
-                child: Icon(Icons.chrome_reader_mode),
-              ),
-              title: const Text('選項一'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const CircleAvatar(
-                child: Icon(Icons.chrome_reader_mode),
-              ),
-              title: const Text('選項二'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const CircleAvatar(
-                child: Icon(Icons.chrome_reader_mode),
-              ),
-              title: const Text('選項三'),
-              onTap: () {},
-            ),
-          ],
-        ),
+
       ),
     );
   }
